@@ -18,4 +18,8 @@ public class Gpu {
         this.hardware = systemInfo.getHardware();
         this.os = systemInfo.getOperatingSystem();
     }
+    public List<GraphicsCard> getListaGPU (){
+        listasGpus = hardware.getGraphicsCards();
+        return listasGpus;
+    }
 }
