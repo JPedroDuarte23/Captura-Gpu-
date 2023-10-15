@@ -60,7 +60,8 @@ public class MemoriaService {
         Memoria memoria = looca.getMemoria();
         Double mem_uso = memoria.getEmUso() / (1024.0 * 1024.0 * 1024.0);
         Double mem_disp = memoria.getDisponivel() / (1024.0 * 1024.0 * 1024.0);
-        Double uso = (mem_uso/ memoria.getTotal()) / (1024.0 * 1024.0 * 1024.0);
+        Double mem_total = memoria.getTotal() / (1024.0 * 1024.0 * 1024.0);
+        Double uso = (mem_uso / mem_total) * 100.0;
 
         con.update("INSERT INTO registro (fk_componente, uso, vel_grav, vel_leit, vel_cpu, mem_uso, mem_disp, dt_hora) VALUES (%d, %s, null, null, null, %s, %s, now() )".formatted(idMemoria, df.format(uso), df.format(mem_uso), df.format(mem_disp)));
     }
