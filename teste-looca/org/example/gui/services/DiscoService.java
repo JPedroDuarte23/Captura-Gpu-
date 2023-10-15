@@ -3,6 +3,7 @@ package org.example.gui.services;
 import com.github.britooo.looca.api.core.Looca;
 import com.github.britooo.looca.api.group.discos.Disco;
 import org.example.gui.components.Componente;
+import org.example.gui.components.Registro;
 import org.example.gui.conexao.Conexao;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -67,24 +68,56 @@ public class DiscoService {
         Integer idDisco;
 
         for (int i = 0; i < dadosDiscos.size(); i++) {
-            List<Disco> discos = looca.getGrupoDeDiscos().getDiscos();
-            disco = discos.get(i);
+            disco = looca.getGrupoDeDiscos().getDiscos().get(i);
+
+            idDisco = dadosDiscos.get(i).getId_componente();
+
             Long bytesLidosInicio = disco.getBytesDeLeitura();
             Long bytesEscrInicio = disco.getBytesDeEscritas();
-            System.out.println(disco.getBytesDeEscritas());
+
             try {
-                Thread.sleep(1000); // Espera 1 segundo
+                Thread.sleep(5000); // Espera 1 segundo
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
+            disco = looca.getGrupoDeDiscos().getDiscos().get(i);
 
             Long bytesEscrFim = disco.getBytesDeEscritas();
             Long bytesLidosFim = disco.getBytesDeLeitura();
-            idDisco = dadosDiscos.get(i).getId_componente();
-            uso = disco.getTempoDeTransferencia() / 1000.0;
-            vel_escr = (bytesEscrFim - bytesEscrInicio/1000.0);
-            vel_leit = (bytesLidosFim - bytesLidosInicio/1000.0);
-            con.update("INSERT INTO registro (fk_componente, uso, vel_grav, vel_leit, vel_cpu, mem_uso, mem_disp, dt_hora) VALUES (%d, %s, %s, %s, null, null, null, now() )".formatted(idDisco, df.format(uso), df.format(vel_escr), df.format(vel_leit)));
+
+            Long leituras = disco.getLeituras();
+            Long escritas = disco.getEscritas();
+
+            Long tamanhoAtualDaFila = disco.getTamanhoAtualDaFila();
+            Long tempoDeTransferencia = disco.getTempoDeTransferencia();
+            Double tempoEmSegundos = tempoDeTransferencia / 1000.0;
+
+
+            if (tempoDeTransferencia != 0 && tamanhoAtualDaFila !=0) {
+                uso = ((leituras + escritas) / (tamanhoAtualDaFila * tempoDeTransferencia)) * 100.0;
+                System.out.println(uso);
+            } else {
+                List<Registro> listaAntigosRegistros = con.query("SELECT * FROM registro WHERE fk_componente = %d ORDER BY id_registro DESC LIMIT 1".formatted(idDisco), new BeanPropertyRowMapper<>(Registro.class));
+                if (listaAntigosRegistros.size() > 0){
+                    uso = listaAntigosRegistros.get(0).getUso();
+                } else {
+                    uso = 0.0;
+                }
+            }
+
+            Long tamanhoTotal = disco.getTamanho();
+
+            Long espacoEmUso = bytesLidosFim + bytesEscrFim;
+
+            Long espacoDisponivel = tamanhoTotal - espacoEmUso;
+
+            Double espacoEmUsoGB = espacoEmUso / (1024.0 * 1024.0 * 1024.0);
+            Double espacoDisponivelGB = espacoDisponivel / (1024.0 * 1024.0 * 1024.0);
+
+            vel_escr = ((bytesEscrFim - bytesEscrInicio)/ 1024.0)/ tempoEmSegundos;
+            vel_leit = ((bytesLidosFim - bytesLidosInicio)/ 1024.0)/ tempoEmSegundos;
+
+            con.update("INSERT INTO registro (fk_componente, uso, vel_grav, vel_leit, vel_cpu, mem_uso,mem_disp, dt_hora) VALUES (%d, %s, %s, %s, null, %s, %s, now() )".formatted(idDisco, df.format(uso), df.format(vel_escr), df.format(vel_leit), df.format(espacoEmUsoGB), df.format(espacoDisponivelGB)));
         }
     }
 }

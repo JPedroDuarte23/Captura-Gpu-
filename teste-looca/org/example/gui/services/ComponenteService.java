@@ -56,6 +56,8 @@ public class ComponenteService {
         discoService.cadastrarDisco(fkUsuario);
         gpuService.cadastrarGPU(fkUsuario);
         memoriaService.cadastrarMemoria(fkUsuario);
+        List<Componente> listaComponentes= con.query("SELECT * FROM componente", new BeanPropertyRowMapper<>(Componente.class));
+        System.out.println(listaComponentes);
     }
     public void comecarCaptura(){
         cpuService.capturarDadosProcessador();

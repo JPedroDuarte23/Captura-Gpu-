@@ -505,3 +505,6 @@ SELECT * FROM componente WHERE fk = '1' AND tipo = 'GPU' [42122-222]
 	at java.desktop/java.awt.EventDispatchThread.pumpEvents(EventDispatchThread.java:109)
 	at java.desktop/java.awt.EventDispatchThread.pumpEvents(EventDispatchThread.java:101)
 	at java.desktop/java.awt.EventDispatchThread.run(EventDispatchThread.java:90)
+2023-10-15 18:46:59.275102-03:00 jdbc[7]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "SELECT * FROM registro WHERE fk_componente = [*]%d ORDER BY id_registro DESC LIMIT 1"; expected "ALL (, ANY (, SOME ("; SQL statement:
+SELECT * FROM registro WHERE fk_componente = %d ORDER BY id_registro DESC LIMIT 1 [42001-222]

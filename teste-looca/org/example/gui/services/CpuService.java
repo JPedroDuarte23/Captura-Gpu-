@@ -62,12 +62,12 @@ public class CpuService {
     public void capturarDadosProcessador(){
         DecimalFormat df = new DecimalFormat("0.00");
         df.setDecimalFormatSymbols(new DecimalFormatSymbols(java.util.Locale.US));
+
         System.out.println(dadosProcessador);
         Integer fk_componente = dadosProcessador.get(0).getId_componente();
         this.cpu = looca.getProcessador();
         Double uso = cpu.getUso();
         Double vel_cpu = cpu.getFrequencia() / Math.pow(10,9);
-        System.out.println("INSERT INTO registro (fk_componente, uso, vel_grav, vel_leit, vel_cpu, mem_uso, mem_disp, dt_hora) VALUES (%d, %s, null, null, %s, null, null, now() )".formatted(fk_componente,df.format(uso), df.format(vel_cpu)));
         con.update("INSERT INTO registro (fk_componente, uso, vel_grav, vel_leit, vel_cpu, mem_uso, mem_disp, dt_hora) VALUES (%d, %s, null, null, %s, null, null, now() )".formatted(fk_componente,df.format(uso), df.format(vel_cpu)));
     }
 }

@@ -40,7 +40,7 @@ public class GpuService {
             for (int i = dadosGPU.size(); i < listaGPUs.size(); i++) {
                 componente.setTipo("GPU");
                 componente.setNome(listaGPUs.get(i).getName());
-                componente.setCapacidade(listaGPUs.get(i).getVRam() / Math.pow(10, 9));
+                componente.setCapacidade(listaGPUs.get(i).getVRam() / (1024.0 * 1024.0 * 1024.0));
                 componente.setNum_nucleo(null);
                 componente.setVelocidade(null);
                 con.update("INSERT INTO componente (fk_usuario, nome, tipo, num_nucleo, capacidade, velocidade) VALUES (%d, '%s', '%s', NULL, %s, NULL)".formatted(fk, componente.getNome(),componente.getTipo(), df.format(componente.getCapacidade())));
@@ -66,8 +66,8 @@ public class GpuService {
 
         if (listaGPUs.get(0).getVendor().contains("NVIDIA")){
             int porcentagem = 0;
-            long mem_uso = 0;
-            long mem_disp = 0;
+            Double mem_uso = 0.0;
+            Double mem_disp = 0.0;
             Integer idGPU;
 
             for (int i = 0; i < dadosGPU.size(); i++) {
@@ -80,10 +80,8 @@ public class GpuService {
                     while ((line = reader.readLine()) != null) {
                         String[] memoryInfo = line.trim().split(",");
                         porcentagem = Integer.parseInt(memoryInfo[0].trim());
-                        mem_uso = Long.parseLong(memoryInfo[1].trim());
-                        mem_disp = Long.parseLong(memoryInfo[2].trim());
-                        System.out.println("Memória de Vídeo em Uso: " + mem_uso + " MiB");
-                        System.out.println("Memória de Vídeo Disponível: " + mem_disp + " MiB");
+                        mem_uso = Long.parseLong(memoryInfo[1].trim()) / 1024.0;
+                        mem_disp = Long.parseLong(memoryInfo[2].trim()) / 1024.0;
                     }
 
                     process.waitFor();
