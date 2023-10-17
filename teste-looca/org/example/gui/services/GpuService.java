@@ -64,13 +64,14 @@ public class GpuService {
         DecimalFormat df = new DecimalFormat("0.00");
         df.setDecimalFormatSymbols(new DecimalFormatSymbols(java.util.Locale.US));
 
-        if (listaGPUs.get(0).getVendor().contains("NVIDIA")){
-            int porcentagem = 0;
-            Double mem_uso = 0.0;
-            Double mem_disp = 0.0;
-            Integer idGPU;
 
-            for (int i = 0; i < dadosGPU.size(); i++) {
+
+        for (int i = 0; i < dadosGPU.size(); i++) {
+            if (listaGPUs.get(i).getVendor().contains("NVIDIA")){
+                int porcentagem = 0;
+                Double mem_uso = 0.0;
+                Double mem_disp = 0.0;
+                Integer idGPU;
                 idGPU = dadosGPU.get(i).getId_componente();
                 try {
                     Process process = Runtime.getRuntime().exec("nvidia-smi --query-gpu=utilization.gpu,memory.used,memory.free --format=csv,noheader,nounits");
