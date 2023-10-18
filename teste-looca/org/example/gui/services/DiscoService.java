@@ -107,7 +107,7 @@ public class DiscoService {
 
             Long tamanhoTotal = disco.getTamanho();
 
-            Long espacoEmUso = bytesLidosFim + bytesEscrFim;
+            Long espacoEmUso = bytesEscrFim;
 
             Long espacoDisponivel = tamanhoTotal - espacoEmUso;
 
