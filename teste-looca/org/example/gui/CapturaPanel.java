@@ -33,4 +33,9 @@ public class CapturaPanel extends TelaPanel {
     public void executarBotao(ActionEvent e) {
         trocarTela("Tela Login");
     }
+    public void iniciarCapturas(){
+        ComponenteService componenteService = new ComponenteService(1);
+        componenteService.cadastrarPecas();
+        componenteService.comecarCaptura();
+    }
 }

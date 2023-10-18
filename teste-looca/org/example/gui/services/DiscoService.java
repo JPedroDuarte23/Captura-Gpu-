@@ -76,7 +76,7 @@ public class DiscoService {
             Long bytesEscrInicio = disco.getBytesDeEscritas();
 
             try {
-                Thread.sleep(5000); // Espera 1 segundo
+                Thread.sleep(1000); // Espera 1 segundo
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

@@ -7,6 +7,8 @@ import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class ComponenteService {
     private CpuService cpuService;
@@ -56,15 +58,21 @@ public class ComponenteService {
         discoService.cadastrarDisco(fkUsuario);
         gpuService.cadastrarGPU(fkUsuario);
         memoriaService.cadastrarMemoria(fkUsuario);
-        List<Componente> listaComponentes= con.query("SELECT * FROM componente", new BeanPropertyRowMapper<>(Componente.class));
-        System.out.println(listaComponentes);
     }
     public void comecarCaptura(){
-        cpuService.capturarDadosProcessador();
-        discoService.capturarDadosDisco();
-        gpuService.capturarDadosGPU();
-        memoriaService.capturarDadosMemoria();
-        List<Registro> listaRegistro = con.query("SELECT * FROM registro", new BeanPropertyRowMapper<>(Registro.class));
-        System.out.println(listaRegistro.toString());
+        Timer timer = new Timer();
+
+        TimerTask tarefa = new TimerTask() {
+            @Override
+            public void run() {
+                discoService.capturarDadosDisco();
+                cpuService.capturarDadosProcessador();
+                gpuService.capturarDadosGPU();
+                memoriaService.capturarDadosMemoria();
+                List<Registro> listaRegistro = con.query("SELECT * FROM registro", new BeanPropertyRowMapper<>(Registro.class));
+                System.out.println(listaRegistro.toString());
+            }
+        };
+        timer.scheduleAtFixedRate(tarefa, 0, 1000);
     }
 }

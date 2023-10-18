@@ -60,16 +60,13 @@ public class LoginPanel extends TelaPanel {
     public void executarBotao(ActionEvent e){
        if(logar()){
            trocarTela("Tela Principal");
-           ComponenteService componenteService = new ComponenteService(1);
-           componenteService.cadastrarPecas();
-           componenteService.comecarCaptura();
        }else{
            textoAlerta.setVisible(true);
        };
     }
     public Boolean logar(){
-        if(campoEmail.getText().equals("1")
-                && campoSenha.getText().equals("1")){
+        if(campoEmail.getText().equals("monitoons@monitoons.com")
+                && campoSenha.getText().equals("12345678")){
             return true;
         } else {
             return false;

@@ -62,8 +62,6 @@ public class CpuService {
     public void capturarDadosProcessador(){
         DecimalFormat df = new DecimalFormat("0.00");
         df.setDecimalFormatSymbols(new DecimalFormatSymbols(java.util.Locale.US));
-
-        System.out.println(dadosProcessador);
         Integer fk_componente = dadosProcessador.get(0).getId_componente();
         this.cpu = looca.getProcessador();
         Double uso = cpu.getUso();
