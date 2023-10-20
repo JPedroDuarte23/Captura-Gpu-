@@ -34,8 +34,11 @@ public class DiscoService {
     public void cadastrarDisco(Integer fk){
         DecimalFormat df = new DecimalFormat("0.00");
         df.setDecimalFormatSymbols(new DecimalFormatSymbols(java.util.Locale.US));
+
         this.dadosDiscos = con.query("SELECT * FROM componente WHERE fk_usuario = %d AND tipo = 'DISCO'".formatted(fk), new BeanPropertyRowMapper<>(Componente.class));
+
         this.listaDiscos = looca.getGrupoDeDiscos().getDiscos();
+
         if(this.listaDiscos.size() != this.dadosDiscos.size()) {
             for (int i = dadosDiscos.size(); i < listaDiscos.size(); i++) {
                 componente.setTipo("DISCO");

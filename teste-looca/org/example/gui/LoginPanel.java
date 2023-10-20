@@ -25,6 +25,7 @@ public class LoginPanel extends TelaPanel {
         txtLogin.setBounds(440, 205, 300, 35);
         txtLogin.setForeground(Color.decode("#dcdcdc"));
         txtLogin.setFont(new Font("Montserrat", Font.BOLD, 20));
+
         campoEmail = new JTextField();
         campoEmail.setFont(new Font("Montserrat", Font.PLAIN, 18));
         campoEmail.setBounds(450, 250, 300, 35);

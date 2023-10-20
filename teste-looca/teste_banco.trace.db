@@ -508,3 +508,106 @@ SELECT * FROM componente WHERE fk = '1' AND tipo = 'GPU' [42122-222]
 2023-10-15 18:46:59.275102-03:00 jdbc[7]: exception
 org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "SELECT * FROM registro WHERE fk_componente = [*]%d ORDER BY id_registro DESC LIMIT 1"; expected "ALL (, ANY (, SOME ("; SQL statement:
 SELECT * FROM registro WHERE fk_componente = %d ORDER BY id_registro DESC LIMIT 1 [42001-222]
+2023-10-20 16:07:51.835173-03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "CREATE TABLE aplicativos_abertos(\000a    id_aplicativo INT PRIMARY KEY AUTO_INCREMENT,\000a    titulo varchar(50),\000a    comando varchar(255),\000a    uso_cpu DOUBLE,\000a    uso_mem DOUBLE,\000a    dt_hora DATETIME\000a[*]"; expected "(, ARRAY, INVISIBLE, VISIBLE, NOT NULL, DEFAULT, GENERATED, ON UPDATE, NOT NULL, DEFAULT ON NULL, SEQUENCE, SELECTIVITY, COMMENT, CONSTRAINT, COMMENT, PRIMARY KEY, UNIQUE, NOT NULL, CHECK, REFERENCES, ,, )"; SQL statement:
+CREATE TABLE aplicativos_abertos(
+    id_aplicativo INT PRIMARY KEY AUTO_INCREMENT,
+    titulo varchar(50),
+    comando varchar(255),
+    uso_cpu DOUBLE,
+    uso_mem DOUBLE,
+    dt_hora DATETIME
+ [42001-222]
+2023-10-20 16:08:53.708889-03:00 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "INSERT INTO aplicativos_abertos (pid, titulo, comando, uso_cpu, uso_memoria,dt_hora) VALUES (12800, teste-looca [*]– ComponenteService.java, C:\\Program Files\\JetBrains\\IntelliJ IDEA Community Edition 2023.2\\bin\\idea64.exe, 8.79, 16.71, now() )"; SQL statement:
+INSERT INTO aplicativos_abertos (pid, titulo, comando, uso_cpu, uso_memoria,dt_hora) VALUES (12800, teste-looca – ComponenteService.java, C:\Program Files\JetBrains\IntelliJ IDEA Community Edition 2023.2\bin\idea64.exe, 8.79, 16.71, now() ) [42000-222]
+2023-10-20 16:10:04.960564-03:00 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Column "PID" not found; SQL statement:
+INSERT INTO aplicativos_abertos (pid, titulo, comando, uso_cpu, uso_memoria,dt_hora) VALUES (12800, 'teste-looca – AplicativoService.java', 'C:\Program Files\JetBrains\IntelliJ IDEA Community Edition 2023.2\bin\idea64.exe', '8.78', '16.73', now() ) [42122-222]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:514)
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:489)
+	at org.h2.message.DbException.get(DbException.java:223)
+	at org.h2.message.DbException.get(DbException.java:199)
+	at org.h2.table.Table.getColumn(Table.java:759)
+	at org.h2.command.Parser.parseColumn(Parser.java:1190)
+	at org.h2.command.Parser.parseColumnList(Parser.java:1175)
+	at org.h2.command.Parser.parseInsert(Parser.java:1549)
+	at org.h2.command.Parser.parsePrepared(Parser.java:719)
+	at org.h2.command.Parser.parse(Parser.java:592)
+	at org.h2.command.Parser.parse(Parser.java:564)
+	at org.h2.command.Parser.prepareCommand(Parser.java:483)
+	at org.h2.engine.SessionLocal.prepareLocal(SessionLocal.java:639)
+	at org.h2.engine.SessionLocal.prepareCommand(SessionLocal.java:559)
+	at org.h2.jdbc.JdbcConnection.prepareCommand(JdbcConnection.java:1166)
+	at org.h2.jdbc.JdbcStatement.executeUpdateInternal(JdbcStatement.java:190)
+	at org.h2.jdbc.JdbcStatement.executeUpdate(JdbcStatement.java:147)
+	at org.apache.commons.dbcp2.DelegatingStatement.executeUpdate(DelegatingStatement.java:322)
+	at org.apache.commons.dbcp2.DelegatingStatement.executeUpdate(DelegatingStatement.java:322)
+	at org.springframework.jdbc.core.JdbcTemplate$1UpdateStatementCallback.doInStatement(JdbcTemplate.java:511)
+	at org.springframework.jdbc.core.JdbcTemplate$1UpdateStatementCallback.doInStatement(JdbcTemplate.java:508)
+	at org.springframework.jdbc.core.JdbcTemplate.execute(JdbcTemplate.java:376)
+	at org.springframework.jdbc.core.JdbcTemplate.update(JdbcTemplate.java:523)
+	at org.example.gui.services.AplicativoService.capturarAplicativos(AplicativoService.java:67)
+	at org.example.gui.services.ComponenteService$1.run(ComponenteService.java:88)
+	at java.base/java.util.TimerThread.mainLoop(Timer.java:566)
+	at java.base/java.util.TimerThread.run(Timer.java:516)
+2023-10-20 16:10:53.825774-03:00 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Column "USO_MEMORIA" not found; SQL statement:
+INSERT INTO aplicativos_abertos (pid, titulo, comando, uso_cpu, uso_memoria,dt_hora) VALUES (12800, 'teste-looca – ComponenteService.java', 'C:\Program Files\JetBrains\IntelliJ IDEA Community Edition 2023.2\bin\idea64.exe', '8.78', '16.73', now() ) [42122-222]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:514)
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:489)
+	at org.h2.message.DbException.get(DbException.java:223)
+	at org.h2.message.DbException.get(DbException.java:199)
+	at org.h2.table.Table.getColumn(Table.java:759)
+	at org.h2.command.Parser.parseColumn(Parser.java:1190)
+	at org.h2.command.Parser.parseColumnList(Parser.java:1175)
+	at org.h2.command.Parser.parseInsert(Parser.java:1549)
+	at org.h2.command.Parser.parsePrepared(Parser.java:719)
+	at org.h2.command.Parser.parse(Parser.java:592)
+	at org.h2.command.Parser.parse(Parser.java:564)
+	at org.h2.command.Parser.prepareCommand(Parser.java:483)
+	at org.h2.engine.SessionLocal.prepareLocal(SessionLocal.java:639)
+	at org.h2.engine.SessionLocal.prepareCommand(SessionLocal.java:559)
+	at org.h2.jdbc.JdbcConnection.prepareCommand(JdbcConnection.java:1166)
+	at org.h2.jdbc.JdbcStatement.executeUpdateInternal(JdbcStatement.java:190)
+	at org.h2.jdbc.JdbcStatement.executeUpdate(JdbcStatement.java:147)
+	at org.apache.commons.dbcp2.DelegatingStatement.executeUpdate(DelegatingStatement.java:322)
+	at org.apache.commons.dbcp2.DelegatingStatement.executeUpdate(DelegatingStatement.java:322)
+	at org.springframework.jdbc.core.JdbcTemplate$1UpdateStatementCallback.doInStatement(JdbcTemplate.java:511)
+	at org.springframework.jdbc.core.JdbcTemplate$1UpdateStatementCallback.doInStatement(JdbcTemplate.java:508)
+	at org.springframework.jdbc.core.JdbcTemplate.execute(JdbcTemplate.java:376)
+	at org.springframework.jdbc.core.JdbcTemplate.update(JdbcTemplate.java:523)
+	at org.example.gui.services.AplicativoService.capturarAplicativos(AplicativoService.java:67)
+	at org.example.gui.services.ComponenteService$1.run(ComponenteService.java:89)
+	at java.base/java.util.TimerThread.mainLoop(Timer.java:566)
+	at java.base/java.util.TimerThread.run(Timer.java:516)
+2023-10-20 16:22:03.603183-03:00 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Column "USO_CPU" not found; SQL statement:
+INSERT INTO aplicativos_abertos (pid, titulo, comando, uso_cpu, uso_memoria,dt_hora) VALUES (12800, 'teste-looca – AplicativoService.java', 'C:\Program Files\JetBrains\IntelliJ IDEA Community Edition 2023.2\bin\idea64.exe', '8.93', '18.49', now() ) [42122-222]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:514)
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:489)
+	at org.h2.message.DbException.get(DbException.java:223)
+	at org.h2.message.DbException.get(DbException.java:199)
+	at org.h2.table.Table.getColumn(Table.java:759)
+	at org.h2.command.Parser.parseColumn(Parser.java:1190)
+	at org.h2.command.Parser.parseColumnList(Parser.java:1175)
+	at org.h2.command.Parser.parseInsert(Parser.java:1549)
+	at org.h2.command.Parser.parsePrepared(Parser.java:719)
+	at org.h2.command.Parser.parse(Parser.java:592)
+	at org.h2.command.Parser.parse(Parser.java:564)
+	at org.h2.command.Parser.prepareCommand(Parser.java:483)
+	at org.h2.engine.SessionLocal.prepareLocal(SessionLocal.java:639)
+	at org.h2.engine.SessionLocal.prepareCommand(SessionLocal.java:559)
+	at org.h2.jdbc.JdbcConnection.prepareCommand(JdbcConnection.java:1166)
+	at org.h2.jdbc.JdbcStatement.executeUpdateInternal(JdbcStatement.java:190)
+	at org.h2.jdbc.JdbcStatement.executeUpdate(JdbcStatement.java:147)
+	at org.apache.commons.dbcp2.DelegatingStatement.executeUpdate(DelegatingStatement.java:322)
+	at org.apache.commons.dbcp2.DelegatingStatement.executeUpdate(DelegatingStatement.java:322)
+	at org.springframework.jdbc.core.JdbcTemplate$1UpdateStatementCallback.doInStatement(JdbcTemplate.java:511)
+	at org.springframework.jdbc.core.JdbcTemplate$1UpdateStatementCallback.doInStatement(JdbcTemplate.java:508)
+	at org.springframework.jdbc.core.JdbcTemplate.execute(JdbcTemplate.java:376)
+	at org.springframework.jdbc.core.JdbcTemplate.update(JdbcTemplate.java:523)
+	at org.example.gui.services.AplicativoService.capturarAplicativos(AplicativoService.java:63)
+	at org.example.gui.services.ComponenteService$1.run(ComponenteService.java:89)
+	at java.base/java.util.TimerThread.mainLoop(Timer.java:566)
+	at java.base/java.util.TimerThread.run(Timer.java:516)

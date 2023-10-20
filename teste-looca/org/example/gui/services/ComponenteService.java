@@ -1,5 +1,6 @@
 package org.example.gui.services;
 
+import org.example.gui.components.Aplicativo;
 import org.example.gui.components.Componente;
 import org.example.gui.components.Registro;
 import org.example.gui.conexao.Conexao;
@@ -15,6 +16,7 @@ public class ComponenteService {
     private DiscoService discoService;
     private GpuService gpuService;
     private MemoriaService memoriaService;
+    private AplicativoService aplicativoService;
     private Integer fkUsuario;
     private Conexao conexao;
     private JdbcTemplate con;
@@ -23,6 +25,7 @@ public class ComponenteService {
         this.discoService = new DiscoService();
         this.gpuService = new GpuService();
         this.memoriaService = new MemoriaService();
+        this.aplicativoService = new AplicativoService();
         this.fkUsuario = fkUsuario;
 
         this.conexao = new Conexao();
@@ -51,6 +54,18 @@ public class ComponenteService {
                      mem_disp DOUBLE,
                      dt_hora DATETIME
                 )""");
+        con.execute("DROP TABLE IF EXISTS aplicativos_abertos");
+        con.execute("""
+                CREATE TABLE aplicativos_abertos(
+                    id_aplicativo INT PRIMARY KEY AUTO_INCREMENT,
+                    pid INT,
+                    titulo varchar(50),
+                    comando varchar(255),
+                    usoCPU DOUBLE,
+                    usoMemoria DOUBLE,
+                    dt_hora DATETIME
+                    )
+                """);
 
     }
     public void cadastrarPecas(){
@@ -70,7 +85,11 @@ public class ComponenteService {
                 gpuService.capturarDadosGPU();
                 memoriaService.capturarDadosMemoria();
                 List<Registro> listaRegistro = con.query("SELECT * FROM registro", new BeanPropertyRowMapper<>(Registro.class));
+                List<Aplicativo> listaAplicativo = con.query("SELECT * FROM aplicativos_abertos", new BeanPropertyRowMapper<>(Aplicativo.class));
+                aplicativoService.capturarAplicativos();
                 System.out.println(listaRegistro.toString());
+                System.out.println(listaAplicativo.toString());
+
             }
         };
         timer.scheduleAtFixedRate(tarefa, 0, 1000);
